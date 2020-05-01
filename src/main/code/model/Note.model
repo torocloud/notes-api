@@ -1,0 +1,25 @@
+{
+    "name": "Note",
+    "type": "model",
+    "gloopProperties": [
+        {
+            "name": "note_id"
+        },
+        {
+            "name": "subject"
+        },
+        {
+            "name": "body"
+        },
+        {
+            "name": "created_at",
+            "type": "date",
+            "defaultValue": "now"
+        },
+        {
+            "name": "updated_at",
+            "type": "date",
+            "defaultValue": "now"
+        }
+    ]
+}

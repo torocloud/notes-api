@@ -1,0 +1,53 @@
+{
+    "type": "customSql",
+    "input": [
+        {
+            "name": "selectNoteInput",
+            "type": "model",
+            "gloopProperties": [
+                {
+                    "name": "$martiniConnectionPool"
+                },
+                {
+                    "name": "id"
+                }
+            ]
+        }
+    ],
+    "output": [
+        {
+            "name": "selectNoteOutput",
+            "type": "model",
+            "gloopProperties": [
+                {
+                    "name": "ID",
+                    "required": true,
+                    "allowNull": false
+                },
+                {
+                    "name": "SUBJECT",
+                    "required": true,
+                    "allowNull": false
+                },
+                {
+                    "name": "BODY",
+                    "required": true,
+                    "allowNull": false
+                },
+                {
+                    "name": "CREATED_DATE",
+                    "type": "date",
+                    "required": true
+                },
+                {
+                    "name": "UPDATED_DATE",
+                    "type": "date",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "connectionPoolName": "notes",
+    "sqlType": "SELECT_SINGLE",
+    "query": "SELECT *\nFROM\n\t\"NOTES\"\nWHERE\n\t\"ID\" = :id"
+}

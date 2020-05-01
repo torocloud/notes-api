@@ -1,0 +1,5 @@
+<package stateOnStartup="started" id="notes-api" version="1.0.0" context-path="/notes-api">
+  <package-dependencies/>
+  <startup-services/>
+  <shutdown-services/>
+</package>

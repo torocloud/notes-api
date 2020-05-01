@@ -1,0 +1,253 @@
+{
+    "input": [
+        {
+            "name": "note_id",
+            "allowNull": false
+        }
+    ],
+    "output": [
+        {
+            "name": "responseCode",
+            "type": "integer",
+            "defaultValue": 200
+        },
+        {
+            "name": "APIResponse",
+            "type": "model",
+            "reference": "io.toro.martini.api.APIResponse",
+            "gloopProperties": [
+                {
+                    "name": "note",
+                    "type": "model",
+                    "reference": "model.Note"
+                }
+            ]
+        },
+        {
+            "name": "APIException",
+            "type": "model",
+            "reference": "io.toro.martini.api.APIException"
+        }
+    ],
+    "steps": [
+        {
+            "type": "block",
+            "blockType": "TRY_CATCH",
+            "children": [
+                {
+                    "type": "invokeGloop",
+                    "name": "sql.SelectNote",
+                    "declare": [
+                        {
+                            "variables": [
+                                {
+                                    "name": "selectNoteOutput",
+                                    "type": "model",
+                                    "gloopProperties": [
+                                        {
+                                            "name": "ID",
+                                            "required": true,
+                                            "allowNull": false
+                                        },
+                                        {
+                                            "name": "SUBJECT",
+                                            "required": true,
+                                            "allowNull": false
+                                        },
+                                        {
+                                            "name": "BODY",
+                                            "required": true,
+                                            "allowNull": false
+                                        },
+                                        {
+                                            "name": "CREATED_DATE",
+                                            "type": "date",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "UPDATED_DATE",
+                                            "type": "date",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "inputs": [
+                        {
+                            "from": [
+                                "note_id"
+                            ],
+                            "to": [
+                                "selectNoteInput",
+                                "id"
+                            ]
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "from": [
+                                "selectNoteOutput"
+                            ],
+                            "to": [
+                                "selectNoteOutput"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "fork",
+                    "expression": "selectNoteOutput.ID",
+                    "children": [
+                        {
+                            "label": "$null",
+                            "lines": [
+                                {
+                                    "type": "set",
+                                    "expression": "400",
+                                    "to": [
+                                        "responseCode"
+                                    ]
+                                },
+                                {
+                                    "type": "set",
+                                    "expression": "Failed to get note",
+                                    "to": [
+                                        "APIException",
+                                        "message"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "label": "$else",
+                            "lines": [
+                                {
+                                    "type": "set",
+                                    "expression": "200",
+                                    "to": [
+                                        "responseCode"
+                                    ]
+                                },
+                                {
+                                    "type": "set",
+                                    "expression": "Successfully get note",
+                                    "to": [
+                                        "APIResponse",
+                                        "message"
+                                    ]
+                                },
+                                {
+                                    "from": [
+                                        "selectNoteOutput",
+                                        "ID"
+                                    ],
+                                    "to": [
+                                        "APIResponse",
+                                        "note",
+                                        "note_id"
+                                    ]
+                                },
+                                {
+                                    "from": [
+                                        "selectNoteOutput",
+                                        "SUBJECT"
+                                    ],
+                                    "to": [
+                                        "APIResponse",
+                                        "note",
+                                        "subject"
+                                    ]
+                                },
+                                {
+                                    "from": [
+                                        "selectNoteOutput",
+                                        "BODY"
+                                    ],
+                                    "to": [
+                                        "APIResponse",
+                                        "note",
+                                        "body"
+                                    ]
+                                },
+                                {
+                                    "from": [
+                                        "selectNoteOutput",
+                                        "CREATED_DATE"
+                                    ],
+                                    "to": [
+                                        "APIResponse",
+                                        "note",
+                                        "created_at"
+                                    ]
+                                },
+                                {
+                                    "from": [
+                                        "selectNoteOutput",
+                                        "UPDATED_DATE"
+                                    ],
+                                    "to": [
+                                        "APIResponse",
+                                        "note",
+                                        "updated_at"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "catch": [
+                {
+                    "lines": [
+                        {
+                            "type": "set",
+                            "expression": "400",
+                            "to": [
+                                "responseCode"
+                            ]
+                        },
+                        {
+                            "type": "set",
+                            "expression": "Failed to get note",
+                            "to": [
+                                "APIException",
+                                "message"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "invokeCode",
+                    "className": "io.toro.martini.LoggerMethods",
+                    "methodName": "error",
+                    "parameters": [
+                        "java.lang.String",
+                        "java.lang.Throwable"
+                    ],
+                    "inputs": [
+                        {
+                            "from": [
+                                "$gloopException",
+                                "gloopStackTrace"
+                            ],
+                            "to": [
+                                "message"
+                            ]
+                        },
+                        {
+                            "from": [
+                                "$gloopException",
+                                "realException"
+                            ],
+                            "to": [
+                                "throwable"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

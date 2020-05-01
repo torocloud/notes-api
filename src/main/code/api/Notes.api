@@ -1,0 +1,129 @@
+{
+    "info": {
+        "version": "1.0.0-SNAPSHOT"
+    },
+    "basePath": "/notes/1.0",
+    "paths": {
+        "/notes": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "body": "APIResponse",
+                        "description": "Successfully get all notes"
+                    },
+                    "400": {
+                        "body": "APIException",
+                        "description": "Failed to get all notes"
+                    }
+                },
+                "operationType": "gloop",
+                "operationLocation": "api.service.GetAllNote",
+                "responseCodeField": "responseCode"
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "bodyParameter": {
+                    "name": "note"
+                },
+                "responses": {
+                    "200": {
+                        "body": "APIResponse",
+                        "description": "Successfully update note"
+                    },
+                    "400": {
+                        "body": "APIException",
+                        "description": "Failed to update note"
+                    }
+                },
+                "operationType": "gloop",
+                "operationLocation": "api.service.UpdateNote",
+                "responseCodeField": "responseCode"
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "bodyParameter": {
+                    "name": "note"
+                },
+                "responses": {
+                    "200": {
+                        "body": "APIResponse",
+                        "description": "Successfully create note"
+                    },
+                    "400": {
+                        "body": "APIException",
+                        "description": "Failed to create note"
+                    },
+                    "404": {
+                        "body": "APIException",
+                        "description": "Failed to create note"
+                    }
+                },
+                "operationType": "gloop",
+                "operationLocation": "api.service.AddNote",
+                "responseCodeField": "responseCode"
+            }
+        },
+        "/notes/{note_id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "note_id",
+                        "type": "PATH"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "body": "APIResponse",
+                        "description": "Successfully get note"
+                    },
+                    "400": {
+                        "body": "APIException",
+                        "description": "Failed to get note"
+                    },
+                    "404": {
+                        "body": "APIException",
+                        "description": "Note could not found or doesn't exists"
+                    }
+                },
+                "operationType": "gloop",
+                "operationLocation": "api.service.GetNote",
+                "responseCodeField": "responseCode"
+            },
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "note_id",
+                        "type": "PATH"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "body": "APIResponse",
+                        "description": "Successfully delete note"
+                    },
+                    "400": {
+                        "body": "APIException",
+                        "description": "Failed to delete note"
+                    },
+                    "404": {
+                        "body": "APIException",
+                        "description": "Note could not found or doesn't exists"
+                    }
+                },
+                "operationType": "gloop",
+                "operationLocation": "api.service.DeleteNote",
+                "responseCodeField": "responseCode"
+            }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "type": "customSql",
+    "input": [
+        {
+            "name": "selectAllNoteInput",
+            "type": "model",
+            "gloopProperties": [
+                {
+                    "name": "$martiniConnectionPool"
+                },
+                {
+                    "name": "$limit",
+                    "type": "integer"
+                }
+            ]
+        }
+    ],
+    "output": [
+        {
+            "name": "selectAllNoteInputCursor",
+            "type": "model",
+            "array": true,
+            "gloopProperties": [
+                {
+                    "name": "ID",
+                    "required": true,
+                    "allowNull": false
+                },
+                {
+                    "name": "SUBJECT",
+                    "required": true,
+                    "allowNull": false
+                },
+                {
+                    "name": "BODY",
+                    "required": true,
+                    "allowNull": false
+                },
+                {
+                    "name": "CREATED_DATE",
+                    "type": "date",
+                    "required": true
+                },
+                {
+                    "name": "UPDATED_DATE",
+                    "type": "date",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "connectionPoolName": "notes",
+    "sqlType": "SELECT_MULTI",
+    "query": "SELECT *\nFROM\n\t\"NOTES\""
+}

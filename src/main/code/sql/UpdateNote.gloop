@@ -1,0 +1,36 @@
+{
+    "type": "customSql",
+    "input": [
+        {
+            "name": "updateNoteInput",
+            "type": "model",
+            "gloopProperties": [
+                {
+                    "name": "$martiniConnectionPool"
+                },
+                {
+                    "name": "subject"
+                },
+                {
+                    "name": "body"
+                },
+                {
+                    "name": "updatedDate",
+                    "type": "date"
+                },
+                {
+                    "name": "id"
+                }
+            ]
+        }
+    ],
+    "output": [
+        {
+            "name": "updateCount",
+            "type": "integer"
+        }
+    ],
+    "connectionPoolName": "notes",
+    "sqlType": "UPDATE",
+    "query": "UPDATE\n\t\"NOTES\"\nSET\n\t\"SUBJECT\" = COALESCE( :subject, \"SUBJECT\" ),\n\t\"BODY\" = COALESCE( :body, \"BODY\" ),\n\t\"UPDATED_DATE\" = COALESCE( :updatedDate, \"UPDATED_DATE\" )\nWHERE\n\t\"ID\" = :id"
+}
